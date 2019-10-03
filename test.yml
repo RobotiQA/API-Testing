@@ -1,0 +1,21 @@
+delete_subscriber:
+  setup:
+    request:
+      url: /subscribers
+      method: POST
+      body: {
+        "email": "thisisatest@mailosaur.io",
+        "name": "Test Testerson"
+      }
+      capture: {"headers": "Location"}
+  execute:
+    test_204:
+      request: 
+        url: {"headers": "Location"}
+        method: DELETE
+        status_code: 204
+    teardown:
+      request:
+        url: {"headers": "Location"}
+        method: DELETE
+        when: Failure
